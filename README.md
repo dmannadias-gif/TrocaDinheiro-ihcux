@@ -199,13 +199,13 @@ O JavaScript lê o parâmetro com `URLSearchParams`, busca o conteúdo no objeto
 
 Acesse pelo link do Netlify — nenhuma instalação necessária:
 
-🔗 **[https://seu-link-netlify.netlify.app](https://trocadinheiro.netlify.app/)**
+🔗 **(https://trocadinheiro.netlify.app/)**
 
 ### Opção 2 — Rodar localmente
 
 ```bash
 # 1. Clone o repositório
-git clone https://github.com/seu-usuario/trocadinheiro.git
+git clone https://github.com/seu-usuario/TrocaDinheiro-ihcux.git
 
 # 2. Acesse a pasta
 cd trocadinheiro
@@ -324,8 +324,11 @@ Fonte **Inter** em todos os pesos (400, 500, 600, 700, 800). Escolhida por sua a
 ## 🏫 Instituição
 
 **Centro Universitário UNA**
+
 Disciplina: Interação Humano Computador e UX
+
 Professor: Daniel Henrique Matos de Paiva
+
 Semestre: 2026/1
 
 ---
