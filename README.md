@@ -102,7 +102,7 @@ Cada módulo aborda uma situação real do cotidiano financeiro, com linguagem s
 
 ### 🎯 Calculadora do 13º Salário
 - Cálculo proporcional aos meses trabalhados
-- Desconto real de INSS baseado na tabela progressiva 2024
+- Desconto real de INSS baseado na tabela progressiva
 - Simulação de quitar dívidas com o valor líquido
 - Exibe bruto, desconto e líquido separadamente
 
