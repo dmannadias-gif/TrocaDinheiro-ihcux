@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrocaDinheiro — Conteúdo</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+
+    /* ═══════════════════════════════════════
+       RESET E BASE
+    ═══════════════════════════════════════ */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #f0f4f2;
+      color: #1f2937;
+      animation: fadeIn 0.35s ease-out;
+      min-height: 100vh;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══════════════════════════════════════
+       HEADER FIXO (estilo Fernando)
+    ═══════════════════════════════════════ */
+
+    header {
+      background: white;
+      padding: 14px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .logo-btn {
+      text-decoration: none;
+      border-radius: 12px;
+      padding: 6px 10px;
+      transition: 0.2s;
+    }
+
+    .logo-btn:hover { background: #f0fdf4; }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      color: #16a34a;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span { color: #111827; }
+
+    .voltar-btn {
+      background: #f3f4f6;
+      color: #374151;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .voltar-btn:hover { background: #e5e7eb; }
+
+    /* ═══════════════════════════════════════
+       CONTAINER CENTRAL
+       Simula tela de celular no desktop
+    ═══════════════════════════════════════ */
+
+    .page-wrapper {
+      max-width: 520px;
+      margin: 40px auto;
+      padding: 0 16px 60px;
+    }
+
+    /* ═══════════════════════════════════════
+       CABEÇALHO DO MÓDULO
+       Gradiente verde igual ao index
+    ═══════════════════════════════════════ */
+
+    .modulo-header {
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      border-radius: 24px;
+      padding: 28px 24px 24px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Círculo decorativo no canto */
+    .modulo-header::after {
+      content: '';
+      position: absolute;
+      top: -30px; right: -30px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .modulo-header .subtitulo {
+      color: rgba(255,255,255,0.75);
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .modulo-header h1 {
+      color: white;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+
+    /* ═══════════════════════════════════════
+       BARRA DE PROGRESSO (da Anna — elogiada)
+    ═══════════════════════════════════════ */
+
+    .progress-wrapper {
+      background: white;
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 600;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+
+    .progress-bg {
+      background: #e5e7eb;
+      border-radius: 8px;
+      height: 8px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      background: linear-gradient(90deg, #16a34a, #22c55e);
+      border-radius: 8px;
+      height: 8px;
+      transition: width 0.5s ease;
+    }
+
+    /* ═══════════════════════════════════════
+       CARD DE CONTEÚDO PRINCIPAL
+    ═══════════════════════════════════════ */
+
+    .conteudo-card {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      /* Animação suave ao trocar de passo */
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(12px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .conteudo-card p {
+      font-size: 15px;
+      line-height: 1.75;
+      color: #374151;
+    }
+
+    /* ═══════════════════════════════════════
+       CAIXA DE DICA PRÁTICA (da Anna)
+    ═══════════════════════════════════════ */
+
+    .tip-box {
+      background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+      border-left: 5px solid #16a34a;
+      border-radius: 0 16px 16px 0;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    .tip-box h3 {
+      color: #166534;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tip-box p {
+      color: #15803d;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════
+       CALCULADORA EMBUTIDA (exclusiva do 13º)
+    ═══════════════════════════════════════ */
+
+    .calc-embutida {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      border-top: 4px solid #16a34a;
+      display: none;
+      /* Começa escondida — aparece só no tema do 13º no passo certo */
+    }
+
+    .calc-embutida h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .calc-input-group {
+      margin-bottom: 12px;
+    }
+
+    .calc-input-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 5px;
+    }
+
+    .calc-input-group input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 15px;
+      color: #111827;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .calc-input-group input:focus {
+      border-color: #16a34a;
+      box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
+    }
+
+    .calc-input-group input::placeholder { color: #d1d5db; }
+
+    .calc-resultado {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-top: 14px;
+      display: none;
+      border-left: 4px solid #16a34a;
+    }
+
+    .calc-resultado p {
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.7;
+    }
+
+    .calc-resultado strong {
+      color: #16a34a;
+      font-size: 16px;
+    }
+
+    /* ═══════════════════════════════════════
+       BOTÕES DE NAVEGAÇÃO
+    ═══════════════════════════════════════ */
+
+    .botoes {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn-proximo {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 14px rgba(22,163,74,0.3);
+      letter-spacing: 0.2px;
+    }
+
+    .btn-proximo:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(22,163,74,0.4);
+    }
+
+    .btn-proximo:active { transform: translateY(0); }
+
+    .btn-voltar {
+      width: 100%;
+      padding: 14px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 16px;
+      background: white;
+      color: #6b7280;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-voltar:hover {
+      background: #f9fafb;
+      color: #374151;
+    }
+
+    /* ═══════════════════════════════════════
+       TELA DE CONCLUSÃO DO MÓDULO
+    ═══════════════════════════════════════ */
+
+    .conclusao-card {
+      background: linear-gradient(135deg, #ecfdf5, #dcfce7);
+      border-radius: 20px;
+      padding: 28px 24px;
+      text-align: center;
+      margin-bottom: 16px;
+      display: none;
+      animation: slideIn 0.4s ease-out;
+    }
+
+    .conclusao-icon {
+      font-size: 52px;
+      margin-bottom: 12px;
+    }
+
+    .conclusao-card h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #166534;
+      margin-bottom: 8px;
+    }
+
+    .conclusao-card p {
+      font-size: 14px;
+      color: #15803d;
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVO
+    ═══════════════════════════════════════ */
+
+    @media (max-width: 560px) {
+      header { padding: 12px 16px; }
+      .page-wrapper { margin: 20px auto; }
+      .modulo-header { border-radius: 16px; padding: 22px 18px; }
+      .modulo-header h1 { font-size: 19px; }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <a href="bemvindo.html" class="logo-btn">
+      <div class="logo">💰 Troca<span>Dinheiro</span></div>
+    </a>
+    <button class="voltar-btn" onclick="irPara('index.html')">
+       🏠 Início
+    </button>
+  </header>
+
+  <div class="page-wrapper">
+
+    <!-- CABEÇALHO DO MÓDULO -->
+    <div class="modulo-header">
+      <p class="subtitulo" id="header-subtitulo">Carregando...</p>
+      <h1 id="header-titulo">Carregando...</h1>
+    </div>
+
+    <!-- BARRA DE PROGRESSO -->
+    <div class="progress-wrapper">
+      <div class="progress-label">
+        <span>Seu progresso</span>
+        <span id="progresso-texto">1 de 3</span>
+      </div>
+      <div class="progress-bg">
+        <div class="progress-fill" id="progresso-barra" style="width:33%"></div>
+      </div>
+    </div>
+
+    <!-- CARD DE CONTEÚDO -->
+    <div class="conteudo-card" id="conteudo-card">
+      <p id="conteudo-texto"></p>
+    </div>
+
+    <!-- DICA PRÁTICA -->
+    <div class="tip-box" id="dica-box">
+      <h3>💡 Dica prática</h3>
+      <p id="dica-texto"></p>
+    </div>
+
+    <!-- CALCULADORA DO 13º (aparece só nesse módulo) -->
+    <div class="calc-embutida" id="calc-decimo">
+      <h3>🧮 Simule seu 13º</h3>
+
+      <div class="calc-input-group">
+        <label>Qual é o seu salário? (R$)</label>
+        <input type="number" id="salario-decimo"
+          placeholder="Ex: 1320"
+          oninput="calcularDecimo()">
+      </div>
+
+      <div class="calc-input-group">
+        <label>Quantos meses você trabalhou este ano?</label>
+        <input type="number" id="meses-decimo"
+          placeholder="Ex: 12" min="1" max="12"
+          oninput="calcularDecimo()">
+      </div>
+
+      <div class="calc-input-group">
+        <label>Total de dívidas com juros altos (R$)</label>
+        <input type="number" id="dividas-decimo"
+          placeholder="Ex: 500 (cartão, cheque especial)"
+          oninput="calcularDecimo()">
+      </div>
+
+      <div class="calc-resultado" id="resultado-decimo">
+        <p id="texto-decimo"></p>
+      </div>
+    </div>
+
+    <!-- CARD DE CONCLUSÃO -->
+    <div class="conclusao-card" id="conclusao-card">
+      <div class="conclusao-icon">🎉</div>
+      <h2>Módulo concluído!</h2>
+      <p id="conclusao-texto">Você terminou esse módulo. Continue aprendendo!</p>
+    </div>
+
+    <!-- BOTÕES -->
+    <div class="botoes">
+      <button class="btn-proximo" id="btn-proximo" onclick="avancar()">
+        Próximo →
+      </button>
+      <button class="btn-voltar" id="btn-anterior" onclick="voltar()">
+       ← Anterior
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+
+    // ─────────────────────────────────────
+    // BANCO DE CONTEÚDO COMPLETO
+    // Todos os temas com seus passos
+    // ─────────────────────────────────────
+
+    const temas = {
+
+      vermelho: {
+        subtitulo: "Estou no vermelho",
+        titulo: "Como sair do negativo",
+        conclusao: "Agora você sabe como mapear suas dívidas e dar os primeiros passos para sair do vermelho!",
+        passos: [
+          {
+            texto: "Estar no vermelho significa que você gastou mais do que ganhou. Isso acontece com muita gente e tem solução — mas precisa de um plano. O primeiro passo é saber exatamente quanto você deve e para quem. Anote tudo: cartão, cheque especial, empréstimos, contas atrasadas.",
+            dica: "Pegue um papel agora e liste todas as suas dívidas: nome do credor, valor total e data de vencimento. Ver tudo junto parece assustador, mas é o primeiro passo para sair do buraco."
+          },
+          {
+            texto: "Com a lista em mãos, é hora de priorizar. Nem toda dívida é igual — algumas crescem muito mais rápido que outras. Dívidas com juros altos, como cartão de crédito (400% ao ano) e cheque especial (150% ao ano), devoram seu dinheiro. Quite essas primeiro, mesmo que seja pouco por vez.",
+            dica: "Se você deve R$ 200 no cartão com 400% de juros ao ano, em 12 meses essa dívida pode virar R$ 1.000. Pagar R$ 50 agora vale muito mais do que esperar."
+          },
+          {
+            texto: "Depois de priorizar, o próximo passo é criar um pequeno espaço no orçamento para começar a pagar. Não precisa cortar tudo de uma vez — cortes pequenos somados já fazem diferença. Um lanche a menos por dia são R$ 90 por mês. Uma assinatura cancelada são R$ 30. Pequenas decisões mudam o jogo.",
+            dica: "Liste 3 gastos que você poderia reduzir essa semana. Não precisa eliminar — só reduzir. R$ 100 a mais por mês já permitem quitar uma dívida pequena em poucos meses."
+          },
+          {
+            texto: "Com as dívidas sob controle, é hora de pensar em não voltar para o vermelho. Isso significa criar um colchão financeiro — mesmo pequeno. Uma reserva de R$ 300 a R$ 500 já evita que um imprevisto te jogue de volta no negativo. Construa devagar, mas construa.",
+            dica: "Abra uma conta separada da sua conta corrente e transfira um valor fixo todo mês — mesmo que seja R$ 20. O importante é a constância, não o valor."
+          }
+        ]
+      },
+
+      cartao: {
+        subtitulo: "Tenho dívida no cartão",
+        titulo: "Como os juros funcionam",
+        conclusao: "Agora você entende como os juros do cartão funcionam e como usá-lo de forma saudável!",
+        passos: [
+          {
+            texto: "O cartão de crédito é uma das ferramentas financeiras mais perigosas para quem não entende como ele funciona. A taxa de juros rotativos no Brasil é uma das mais altas do mundo — em média 400% ao ano. Isso significa que uma dívida de R$ 500 pode virar R$ 2.500 em apenas um ano se você pagar só o mínimo.",
+            dica: "Nunca pague só o mínimo do cartão. O mínimo foi criado pelo banco para que você fique devendo o máximo de tempo possível — pagando juros indefinidamente."
+          },
+          {
+            texto: "O cartão de crédito não é dinheiro extra — é um adiantamento do seu salário futuro. Quando você parcela uma compra em 10 vezes, está comprometendo os próximos 10 meses do seu orçamento. Se surgir um imprevisto nesse período, você não tem espaço para respirar.",
+            dica: "Antes de parcelar, pergunte: se eu tivesse esse dinheiro agora, eu compraria à vista? Se a resposta for não, talvez não seja o momento certo para essa compra."
+          },
+          {
+            texto: "Se você já tem dívida no cartão, a estratégia mais eficaz é pagar o máximo possível acima do mínimo todo mês. Se não conseguir pagar o total, tente pelo menos pagar o dobro do mínimo — isso já reduz drasticamente o tempo e o valor total pago.",
+            dica: "Ligue para o banco e negocie. Muitos bancos oferecem parcelamento da fatura com juros menores que o rotativo. Pergunte: 'Posso parcelar minha fatura com taxa menor?'"
+          },
+          {
+            texto: "A melhor forma de usar o cartão é como ferramenta de organização, não de crédito. Use para compras que você já faria com dinheiro em mãos — e pague a fatura completa todo mês. Assim você aproveita o prazo sem pagar juros.",
+            dica: "Configure um limite no cartão de no máximo 30% da sua renda mensal. Se você ganha R$ 1.320, limite de R$ 400 já é suficiente para o uso saudável do cartão."
+          }
+        ]
+      },
+
+      cheque: {
+        subtitulo: "Estou no cheque especial",
+        titulo: "Como sair dessa armadilha",
+        conclusao: "Você entendeu como o cheque especial funciona e como dar os passos para sair dessa armadilha!",
+        passos: [
+          {
+            texto: "O cheque especial é um empréstimo automático que o banco libera quando sua conta fica negativa. Parece conveniente — mas é uma armadilha. A taxa média é de 150% ao ano, e o dinheiro é descontado automaticamente assim que você recebe qualquer depósito, fazendo você entrar no negativo de novo no mês seguinte.",
+            dica: "Se você usa o cheque especial todo mês, seu ciclo financeiro está quebrado: recebe, o banco desconta o cheque especial, você fica sem dinheiro, usa o cheque especial de novo. Para esse ciclo."
+          },
+          {
+            texto: "A primeira estratégia para sair do cheque especial é substituí-lo por um empréstimo pessoal com parcelas fixas. Muitos bancos oferecem essa opção com juros bem menores — de 2% a 5% ao mês, contra os 8% a 12% do cheque especial. A dívida continua existindo, mas para de crescer de forma descontrolada.",
+            dica: "Ligue para o seu banco e diga: 'Quero transformar meu saldo devedor do cheque especial em um empréstimo pessoal com parcelas fixas.' A maioria dos bancos aceita — e os juros caem bastante."
+          },
+          {
+            texto: "Com o cheque especial transformado em parcelas fixas, o próximo passo é entender por que você chegou lá. Na maioria dos casos, os gastos mensais estão maiores que a renda. Use a calculadora de orçamento do TrocaDinheiro para identificar onde está o desequilíbrio.",
+            dica: "Pequenos gastos diários somam muito: R$ 10 por dia são R$ 300 por mês. Identifique um gasto diário que você pode reduzir — não eliminar, só reduzir."
+          },
+          {
+            texto: "Para nunca mais voltar ao cheque especial, o objetivo é criar um colchão na conta corrente — mesmo pequeno. Com R$ 200 a R$ 300 sempre disponíveis na conta, qualquer imprevisto pequeno não te joga mais no negativo automaticamente.",
+            dica: "Peça ao banco para bloquear o cheque especial assim que quitar o saldo devedor. Sem ele disponível, você é forçado a se planejar melhor — e isso é ótimo."
+          }
+        ]
+      },
+
+      decimo: {
+        subtitulo: "O que fazer com o 13º?",
+        titulo: "Use o 13º com inteligência",
+        conclusao: "Agora você sabe como usar o 13º de forma estratégica — pagando dívidas, guardando e fazendo escolhas conscientes!",
+        passos: [
+          {
+            texto: "O 13º salário é uma oportunidade de respirar financeiramente — mas só se for usado com estratégia. Antes de gastar qualquer coisa, reserve 30 minutos para avaliar sua situação: você tem dívidas? O cartão está no limite? Existe alguma conta atrasada ou prestes a vencer? Responda essas perguntas antes de tomar qualquer decisão.",
+            dica: "Faça uma lista rápida: de um lado, suas dívidas e seus juros. Do outro, o valor do seu 13º. Direcione o dinheiro primeiro para onde os juros são mais altos.",
+            calculadora: true
+            // calculadora: true indica que a calculadora aparece nesse passo
+          },
+          {
+            texto: "Se você tem dívidas com juros altos, quitar é sempre o melhor investimento possível. Não existe aplicação financeira que renda 400% ao ano como o cartão de crédito cobra. Cada real pago numa dívida cara é um real que para de crescer contra você.",
+            dica: "Quitar uma dívida de R$ 1.000 com juros de 400% ao ano equivale a um investimento com retorno de 400% — melhor do que qualquer banco ou aplicativo de investimentos."
+          },
+          {
+            texto: "Com as dívidas quitadas, o próximo passo é criar ou reforçar sua reserva de emergência. O ideal é ter de 1 a 3 meses de gastos essenciais guardados. Se seus gastos mensais são R$ 1.000, tente guardar pelo menos R$ 1.000 a R$ 3.000 numa conta separada.",
+            dica: "Guarde a reserva numa conta que renda pelo menos o CDI — como uma conta digital de banco gratuito. O dinheiro fica rendendo enquanto você não precisa usar."
+          },
+          {
+            texto: "Com dívidas quitadas e reserva iniciada, aí sim você pode pensar em algo para você. Uma compra planejada, uma melhoria em casa, um curso que vai abrir portas. O importante é que seja uma decisão consciente — não uma compra por impulso feita no calor do recebimento.",
+            dica: "Espere 48 horas antes de fazer qualquer compra com o 13º. Se depois de dois dias você ainda quiser comprar, provavelmente é uma boa decisão."
+          }
+        ]
+      },
+
+      poupanca: {
+        subtitulo: "Quero guardar dinheiro",
+        titulo: "Como criar uma reserva do zero",
+        conclusao: "Parabéns! Você aprendeu como começar a guardar dinheiro mesmo com renda baixa. O primeiro passo é o mais importante!",
+        passos: [
+          {
+            texto: "Guardar dinheiro com renda baixa parece impossível — mas o segredo não é o valor, é a constância. Guardar R$ 20 por semana são R$ 80 por mês e R$ 960 por ano. Guardar R$ 50 por mês são R$ 600 em um ano. O valor importa menos do que o hábito.",
+            dica: "Defina um dia fixo do mês para transferir um valor para uma conta separada — no mesmo dia que recebe o salário, antes de gastar qualquer coisa. Trate como uma conta obrigatória."
+          },
+          {
+            texto: "A poupança tradicional do banco ainda é uma opção, mas existem alternativas melhores e igualmente seguras. Contas digitais de bancos como Nubank, Inter e C6 Bank rendem automaticamente pelo menos o CDI — que costuma ser melhor que a poupança — sem precisar fazer nada.",
+            dica: "Abrir uma conta digital é gratuito e feito pelo celular em menos de 10 minutos. O dinheiro fica rendendo automaticamente e você pode resgatar a qualquer momento."
+          },
+          {
+            texto: "A reserva de emergência é a primeira meta de quem está começando a guardar dinheiro. O objetivo é ter de 1 a 3 meses de gastos essenciais guardados. Com essa reserva, um imprevisto — como uma consulta médica, um conserto ou um mês de renda menor — não vira uma dívida.",
+            dica: "Calcule seus gastos essenciais mensais (aluguel, alimentação, transporte, contas). Multiplique por 2. Esse é o seu primeiro objetivo de reserva. Foque nele antes de pensar em qualquer outro investimento."
+          }
+        ]
+      }
+
+    };
+
+
+    // ─────────────────────────────────────
+    // LENDO O TEMA DA URL
+    // ─────────────────────────────────────
+
+    const params = new URLSearchParams(window.location.search);
+    const temaSelecionado = params.get('tema') || 'cartao';
+    const tema = temas[temaSelecionado];
+
+    let passoAtual = 0;
+    // Começa no primeiro passo (índice 0)
+
+
+    // ─────────────────────────────────────
+    // FUNÇÃO QUE ATUALIZA A TELA
+    // ─────────────────────────────────────
+
+    function atualizarTela() {
+
+      // Segurança: se o tema não existe, volta para o início
+      if (!tema) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      const passo = tema.passos[passoAtual];
+      const total = tema.passos.length;
+
+      // Atualiza o cabeçalho
+      document.getElementById('header-subtitulo').textContent = tema.subtitulo;
+      document.getElementById('header-titulo').textContent    = tema.titulo;
+
+      // Atualiza o conteúdo com animação
+      const card = document.getElementById('conteudo-card');
+      card.style.animation = 'none';
+      setTimeout(function() {
+        card.style.animation = 'slideIn 0.3s ease-out';
+      }, 10);
+
+      document.getElementById('conteudo-texto').textContent = passo.texto;
+      document.getElementById('dica-texto').textContent     = passo.dica;
+
+      // Atualiza a barra de progresso
+      const porcentagem = ((passoAtual + 1) / total) * 100;
+      document.getElementById('progresso-barra').style.width = porcentagem + '%';
+      document.getElementById('progresso-texto').textContent =
+        (passoAtual + 1) + ' de ' + total;
+
+      // Calculadora do 13º: aparece só no primeiro passo desse tema
+      const calcDecimo = document.getElementById('calc-decimo');
+      if (temaSelecionado === 'decimo' && passo.calculadora) {
+        calcDecimo.style.display = 'block';
+      } else {
+        calcDecimo.style.display = 'none';
+      }
+
+      // Texto do botão: último passo mostra "Concluir"
+      const btnProximo = document.getElementById('btn-proximo');
+      if (passoAtual === total - 1) {
+        btnProximo.textContent = 'Concluir módulo ✓';
+      } else {
+        btnProximo.textContent = 'Próximo →';
+      }
+    }
+
+
+    // ─────────────────────────────────────
+    // CALCULADORA DO 13º
+    // ─────────────────────────────────────
+
+   function calcularDecimo() {
+  const salario = parseFloat(document.getElementById('salario-decimo').value) || 0;
+  const meses   = parseFloat(document.getElementById('meses-decimo').value)   || 0;
+  const dividas = parseFloat(document.getElementById('dividas-decimo').value)  || 0;
+
+  if (salario === 0 || meses === 0) {
+    document.getElementById('resultado-decimo').style.display = 'none';
+    return;
+  }
+
+  // Fórmula correta do 13º proporcional
+  const decimoBruto = (salario / 12) * meses;
+
+  // Desconto do INSS sobre o 13º (tabela 2024 simplificada)
+  let inss = 0;
+  if (decimoBruto <= 1412)       inss = decimoBruto * 0.075;
+  else if (decimoBruto <= 2666)  inss = decimoBruto * 0.09;
+  else if (decimoBruto <= 4000)  inss = decimoBruto * 0.12;
+  else if (decimoBruto <= 7786)  inss = decimoBruto * 0.14;
+  else                            inss = 7786 * 0.14;
+  // Para salários acima do teto, o desconto é sobre o teto
+
+  const decimoLiquido = decimoBruto - inss;
+  const sobra = decimoLiquido - dividas;
+
+  const resEl   = document.getElementById('resultado-decimo');
+  const textoEl = document.getElementById('texto-decimo');
+  resEl.style.display = 'block';
+
+  let texto =
+    '📋 13º bruto: R$ ' + decimoBruto.toLocaleString('pt-BR', {minimumFractionDigits: 2}) +
+    '<br>📉 Desconto INSS: R$ ' + inss.toLocaleString('pt-BR', {minimumFractionDigits: 2}) +
+    '<br><strong>💰 13º líquido: R$ ' + decimoLiquido.toLocaleString('pt-BR', {minimumFractionDigits: 2}) + '</strong>';
+
+  if (dividas > 0) {
+    if (sobra > 0) {
+      texto +=
+        '<br><br>✅ Quitando suas dívidas de R$ ' + dividas.toLocaleString('pt-BR') +
+        ', ainda sobram <strong>R$ ' + sobra.toLocaleString('pt-BR', {minimumFractionDigits: 2}) +
+        '</strong> para guardar ou investir.';
+    } else if (sobra === 0) {
+      texto += '<br><br>⚖️ O 13º cobre exatamente suas dívidas. Foque em quitar tudo e começar o próximo ano no zero!';
+    } else {
+      texto +=
+        '<br><br>⚠️ Suas dívidas (R$ ' + dividas.toLocaleString('pt-BR') +
+        ') são maiores que o 13º líquido. Priorize as de juros mais altos primeiro.';
+    }
+  } else {
+    texto += '<br><br>🐷 Sem dívidas! Use parte para criar ou reforçar sua reserva de emergência.';
+  }
+
+  textoEl.innerHTML = texto;
+}
+
+
+    // ─────────────────────────────────────
+    // FUNÇÃO DO BOTÃO PRÓXIMO / CONCLUIR
+    // ─────────────────────────────────────
+
+    function avancar() {
+      if (passoAtual < tema.passos.length - 1) {
+        passoAtual++;
+        atualizarTela();
+        // Rola suavemente para o topo da página
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      } else {
+        // Último passo: marca como concluído e mostra tela de conclusão
+        salvarConcluido(temaSelecionado);
+        mostrarConclusao();
+      }
+    }
+
+
+    // ─────────────────────────────────────
+    // FUNÇÃO DO BOTÃO ANTERIOR
+    // ─────────────────────────────────────
+
+    function voltar() {
+      if (passoAtual > 0) {
+        // Se não está no primeiro passo, volta um passo
+        passoAtual--;
+        atualizarTela();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        // Se está no primeiro passo, vai para o início
+        irPara('index.html');
+      }
+    }
+
+
+    // ─────────────────────────────────────
+    // TELA DE CONCLUSÃO
+    // ─────────────────────────────────────
+
+    function mostrarConclusao() {
+      // Esconde o conteúdo normal
+      document.getElementById('conteudo-card').style.display = 'none';
+      document.getElementById('dica-box').style.display      = 'none';
+      document.getElementById('calc-decimo').style.display   = 'none';
+      document.getElementById('progress-wrapper') && (document.getElementById('progress-wrapper').style.display = 'none');
+
+      // Mostra o card de conclusão
+      const conclusaoCard = document.getElementById('conclusao-card');
+      conclusaoCard.style.display = 'block';
+      document.getElementById('conclusao-texto').textContent = tema.conclusao;
+
+      // Troca o botão principal para ir às conquistas
+      const btnProximo = document.getElementById('btn-proximo');
+      btnProximo.textContent = '🏆 Ver minhas conquistas';
+      btnProximo.onclick = function() { irPara('conquistas.html'); };
+    }
+
+
+    // ─────────────────────────────────────
+    // SALVAR MÓDULO CONCLUÍDO
+    // ─────────────────────────────────────
+
+    function salvarConcluido(tema) {
+      const concluidos = JSON.parse(localStorage.getItem('concluidos') || '[]');
+      if (!concluidos.includes(tema)) {
+        concluidos.push(tema);
+        localStorage.setItem('concluidos', JSON.stringify(concluidos));
+      }
+    }
+
+
+    // ─────────────────────────────────────
+    // NAVEGAÇÃO COM FADE
+    // ─────────────────────────────────────
+
+    function irPara(pagina) {
+      document.body.style.opacity = '0';
+      document.body.style.transition = 'opacity 0.25s';
+      setTimeout(function() { window.location.href = pagina; }, 250);
+    }
+
+
+    // ─────────────────────────────────────
+    // INICIALIZAÇÃO
+    // ─────────────────────────────────────
+
+    atualizarTela();
+
+  </script>
+
+</body>
+</html>

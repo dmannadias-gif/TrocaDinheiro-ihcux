@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrocaDinheiro — Bem-vindo</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: #f0f4f2;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+
+    /* ═══════════════════════════════════════
+       CARD CENTRAL
+    ═══════════════════════════════════════ */
+
+    .card {
+      background: white;
+      border-radius: 28px;
+      padding: 48px 40px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+
+    /* ═══════════════════════════════════════
+       LOGO ANIMADA
+    ═══════════════════════════════════════ */
+
+    .logo-circle {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 40px;
+      box-shadow: 0 8px 24px rgba(22,163,74,0.35);
+      animation: entrarLogo 0.6s ease-out forwards;
+    }
+
+    @keyframes entrarLogo {
+      from { opacity: 0; transform: scale(0.5); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* ═══════════════════════════════════════
+       TEXTOS — cada um entra com delay
+    ═══════════════════════════════════════ */
+
+    .app-nome {
+      font-size: 28px;
+      font-weight: 800;
+      color: #111827;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+      animation: subir 0.5s ease-out 0.2s both;
+      /* both = aplica o estado inicial antes de começar */
+    }
+
+    .app-nome span { color: #16a34a; }
+
+    .app-desc {
+      font-size: 15px;
+      color: #6b7280;
+      line-height: 1.6;
+      margin-bottom: 36px;
+      animation: subir 0.5s ease-out 0.35s both;
+    }
+
+    @keyframes subir {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══════════════════════════════════════
+       TELA 1: PRIMEIRO ACESSO
+       Pede o nome do usuário
+    ═══════════════════════════════════════ */
+
+    .tela {
+      animation: subir 0.4s ease-out both;
+    }
+
+    .tela-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+      text-align: left;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .input-nome {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 14px;
+      font-size: 16px;
+      color: #111827;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      margin-bottom: 16px;
+      font-family: 'Inter', sans-serif;
+      text-align: center;
+    }
+
+    .input-nome:focus {
+      border-color: #16a34a;
+      box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
+    }
+
+    .input-nome::placeholder { color: #d1d5db; }
+
+    /* Mensagem de erro discreta */
+    .erro {
+      font-size: 13px;
+      color: #ef4444;
+      margin-bottom: 12px;
+      display: none;
+      animation: subir 0.3s ease-out;
+    }
+
+    /* ═══════════════════════════════════════
+       TELA 2: RETORNO
+       Cumprimenta pelo nome
+    ═══════════════════════════════════════ */
+
+    .saudacao {
+      font-size: 22px;
+      font-weight: 800;
+      color: #111827;
+      margin-bottom: 8px;
+    }
+
+    .saudacao span { color: #16a34a; }
+
+    .saudacao-sub {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    /* Progresso resumido na tela de retorno */
+    .resumo-progresso {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 14px;
+      padding: 14px 18px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+    }
+
+    .resumo-icone {
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .resumo-texto h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #166534;
+      margin-bottom: 2px;
+    }
+
+    .resumo-texto p {
+      font-size: 12px;
+      color: #15803d;
+    }
+
+    /* ═══════════════════════════════════════
+       BOTÃO PRINCIPAL
+    ═══════════════════════════════════════ */
+
+    .btn-entrar {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 16px rgba(22,163,74,0.35);
+      letter-spacing: 0.2px;
+      animation: subir 0.5s ease-out 0.5s both;
+    }
+
+    .btn-entrar:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(22,163,74,0.45);
+    }
+
+    .btn-entrar:active { transform: translateY(0); }
+
+    /* Link discreto para trocar de usuário */
+    .trocar-usuario {
+      margin-top: 16px;
+      font-size: 12px;
+      color: #9ca3af;
+      cursor: pointer;
+      background: none;
+      border: none;
+      text-decoration: underline;
+      animation: subir 0.5s ease-out 0.6s both;
+    }
+
+    .trocar-usuario:hover { color: #6b7280; }
+
+    /* ═══════════════════════════════════════
+       RODAPÉ DISCRETO
+    ═══════════════════════════════════════ */
+
+    .rodape {
+      margin-top: 28px;
+      font-size: 12px;
+      color: #d1d5db;
+      animation: subir 0.5s ease-out 0.7s both;
+    }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVO
+    ═══════════════════════════════════════ */
+
+    @media (max-width: 480px) {
+      .card { padding: 36px 24px; }
+      .app-nome { font-size: 24px; }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+
+    <!-- LOGO -->
+    <div class="logo-circle">💰</div>
+
+    <!-- NOME E DESCRIÇÃO DO APP -->
+    <h1 class="app-nome">Troca<span>Dinheiro</span></h1>
+    <p class="app-desc">
+      Educação financeira do jeito que você entende —
+      sem jargão, sem complicação.
+    </p>
+
+    <!-- ═══════════════════════════════════════
+         TELA 1: PRIMEIRO ACESSO
+         Aparece quando não há nome salvo
+    ═══════════════════════════════════════ -->
+
+    <div id="tela-primeiro-acesso" class="tela" style="display:none;">
+
+      <label class="tela-label" for="input-nome">
+        Como podemos te chamar?
+      </label>
+
+      <input
+        type="text"
+        id="input-nome"
+        class="input-nome"
+        placeholder="Digite seu nome"
+        maxlength="30"
+        oninput="limparErro()"
+        onkeydown="if(event.key==='Enter') entrar()"
+      >
+      <!-- onkeydown: ao pressionar Enter, chama entrar() diretamente -->
+
+      <p class="erro" id="erro-nome">
+        Por favor, digite seu nome para continuar.
+      </p>
+
+      <button class="btn-entrar" onclick="entrar()">
+        Começar agora →
+      </button>
+
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         TELA 2: RETORNO
+         Aparece quando há nome salvo
+    ═══════════════════════════════════════ -->
+
+    <div id="tela-retorno" class="tela" style="display:none;">
+
+      <p class="saudacao">
+        Olá, <span id="nome-usuario"></span>! 👋
+      </p>
+
+      <p class="saudacao-sub">
+        Que bom ter você de volta. Continue de onde parou.
+      </p>
+
+      <!-- Resumo do progresso -->
+      <div class="resumo-progresso">
+        <div class="resumo-icone">🏆</div>
+        <div class="resumo-texto">
+          <h4 id="resumo-titulo">Carregando...</h4>
+          <p id="resumo-sub">Veja suas conquistas</p>
+        </div>
+      </div>
+
+      <button class="btn-entrar" onclick="irPara('index.html')">
+        Continuar →
+      </button>
+
+      <br>
+
+      <button class="trocar-usuario" onclick="trocarUsuario()">
+        Não é você? Trocar nome
+      </button>
+
+    </div>
+
+    <!-- RODAPÉ -->
+    <p class="rodape">Gratuito · Sem cadastro · Funciona no celular</p>
+
+  </div>
+
+  <script>
+
+    // ─────────────────────────────────────
+    // VERIFICA SE JÁ HÁ NOME SALVO
+    // Decide qual tela mostrar ao carregar
+    // ─────────────────────────────────────
+
+    const nomeSalvo = localStorage.getItem('nome-usuario');
+    // localStorage.getItem retorna null se não existir
+
+    if (nomeSalvo) {
+      mostrarRetorno(nomeSalvo);
+    } else {
+      mostrarPrimeiroAcesso();
+    }
+
+
+    // ─────────────────────────────────────
+    // TELA DE PRIMEIRO ACESSO
+    // ─────────────────────────────────────
+
+    function mostrarPrimeiroAcesso() {
+      document.getElementById('tela-primeiro-acesso').style.display = 'block';
+      document.getElementById('tela-retorno').style.display         = 'none';
+
+      // Foca automaticamente no campo de nome
+      setTimeout(function() {
+        document.getElementById('input-nome').focus();
+      }, 600);
+      // Delay de 600ms para esperar a animação de entrada terminar
+    }
+
+
+    // ─────────────────────────────────────
+    // TELA DE RETORNO
+    // Preenche com o nome e progresso
+    // ─────────────────────────────────────
+
+    function mostrarRetorno(nome) {
+      document.getElementById('tela-primeiro-acesso').style.display = 'none';
+      document.getElementById('tela-retorno').style.display         = 'block';
+
+      // Preenche o nome
+      document.getElementById('nome-usuario').textContent = nome;
+
+      // Lê o progresso de módulos concluídos
+      const concluidos = JSON.parse(localStorage.getItem('concluidos') || '[]');
+      const total = 5;
+      // Total de módulos disponíveis no app
+
+      const tituloEl = document.getElementById('resumo-titulo');
+      const subEl    = document.getElementById('resumo-sub');
+
+      if (concluidos.length === 0) {
+        tituloEl.textContent = 'Nenhum módulo concluído ainda';
+        subEl.textContent    = 'Comece agora e aprenda algo novo!';
+      } else if (concluidos.length === total) {
+        tituloEl.textContent = 'Todos os módulos concluídos! 🎉';
+        subEl.textContent    = 'Você completou o TrocaDinheiro!';
+      } else {
+        tituloEl.textContent = concluidos.length + ' de ' + total + ' módulos concluídos';
+        subEl.textContent    = 'Continue de onde parou!';
+      }
+    }
+
+
+    // ─────────────────────────────────────
+    // FUNÇÃO DE ENTRADA (primeiro acesso)
+    // ─────────────────────────────────────
+
+    function entrar() {
+      const input = document.getElementById('input-nome');
+      const nome  = input.value.trim();
+      // .trim() remove espaços no início e no fim
+
+      if (nome === '') {
+        // Mostra erro se o campo estiver vazio
+        document.getElementById('erro-nome').style.display = 'block';
+        input.focus();
+        return;
+      }
+
+      // Formata o nome: primeira letra de cada palavra em maiúscula
+      const nomeFormatado = nome
+        .toLowerCase()
+        .split(' ')
+        .map(function(palavra) {
+          return palavra.charAt(0).toUpperCase() + palavra.slice(1);
+          // charAt(0) pega a primeira letra
+          // toUpperCase() a deixa maiúscula
+          // slice(1) pega o resto da palavra
+        })
+        .join(' ');
+
+      // Salva no localStorage
+      localStorage.setItem('nome-usuario', nomeFormatado);
+
+      // Navega para o index com fade
+      irPara('index.html');
+    }
+
+
+    // ─────────────────────────────────────
+    // TROCAR USUÁRIO
+    // Apaga o nome salvo e volta ao primeiro acesso
+    // ─────────────────────────────────────
+
+    function trocarUsuario() {
+      if (confirm('Isso vai apagar seu nome e histórico de progresso. Continuar?')) {
+        localStorage.removeItem('nome-usuario');
+        localStorage.removeItem('concluidos');
+        localStorage.removeItem('ultimoTema');
+        localStorage.removeItem('historico');
+        mostrarPrimeiroAcesso();
+      }
+    }
+
+
+    // ─────────────────────────────────────
+    // LIMPAR MENSAGEM DE ERRO
+    // Chamada quando o usuário começa a digitar
+    // ─────────────────────────────────────
+
+    function limparErro() {
+      document.getElementById('erro-nome').style.display = 'none';
+    }
+
+
+    // ─────────────────────────────────────
+    // NAVEGAÇÃO COM FADE
+    // ─────────────────────────────────────
+
+    function irPara(pagina) {
+      document.body.style.opacity    = '0';
+      document.body.style.transition = 'opacity 0.25s';
+      setTimeout(function() {
+        window.location.href = pagina;
+      }, 250);
+    }
+
+  </script>
+
+</body>
+</html>

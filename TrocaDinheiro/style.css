@@ -1,0 +1,387 @@
+/* ═══════════════════════════════════════════
+   RESET E BASE
+   Regras que se aplicam a todos os elementos
+═══════════════════════════════════════════ */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Importa uma fonte mais elegante do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/*
+  @import carrega um recurso externo — aqui a fonte "Inter"
+  wght=400;500;600;700 carrega os 4 pesos que vamos usar
+  Precisa de internet para funcionar
+*/
+
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  /* Inter primeiro — se não carregar, usa Arial como fallback */
+  background-color: #f0f4f2;
+  /* Verde bem clarinho no fundo — mais sofisticado que cinza puro */
+  color: #1a1a1a;
+  min-height: 100vh;
+  /* Garante que a animação de fade entre telas funcione */
+  animation: fadeIn 0.35s ease-out;
+}
+
+/* Animação de entrada em todas as páginas */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+    /* Sobe levemente ao entrar */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ═══════════════════════════════════════════
+   CONTAINER PRINCIPAL
+═══════════════════════════════════════════ */
+
+.container {
+  max-width: 420px;
+  margin: 0 auto;
+  background: #ffffff;
+  min-height: 100vh;
+  /* Sombra lateral sutil — dá sensação de profundidade */
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ═══════════════════════════════════════════
+   CABEÇALHO
+═══════════════════════════════════════════ */
+
+.header {
+  background: linear-gradient(135deg, #1D9E75, #148a63);
+  /*
+    linear-gradient cria um degradê
+    135deg = direção diagonal
+    Vai do verde principal para um verde mais escuro
+  */
+  padding: 28px 20px 22px;
+  position: relative;
+  overflow: hidden;
+  /* overflow: hidden esconde o círculo decorativo que sai do container */
+}
+
+/* Círculo decorativo no canto do header */
+.header::after {
+  content: '';
+  /* ::after cria um elemento visual sem HTML — só com CSS */
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  /* Branco bem transparente — detalhe sutil */
+}
+
+.header p {
+  color: rgba(255, 255, 255, 0.75);
+  /* Branco com 75% de opacidade — mais suave que branco puro */
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  margin-bottom: 4px;
+}
+
+.header h1 {
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  /* Letter-spacing negativo aproxima as letras — visual mais moderno */
+}
+
+
+/* ═══════════════════════════════════════════
+   ÁREA DE CONTEÚDO
+═══════════════════════════════════════════ */
+
+.content {
+  padding: 20px 16px 32px;
+}
+
+
+/* ═══════════════════════════════════════════
+   CARDS / BOTÕES DE SITUAÇÃO
+═══════════════════════════════════════════ */
+
+.card {
+border: 1px solid #e8edeb;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  background: #ffffff;
+  width: 100%;
+  text-align: left;
+  /* Transição suave em hover — afeta background e transform */
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  /* Sombra muito sutil nos cards */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.card:hover {
+  background-color: #f0faf5;
+  transform: translateY(-2px);
+  /* Sobe 2px no hover — efeito de "levantar" */
+  box-shadow: 0 4px 12px rgba(29, 158, 117, 0.12);
+  /* Sombra verde ao passar o mouse */
+}
+
+.card:active {
+  transform: translateY(0px);
+  /* Volta ao lugar ao clicar — feedback tátil */
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.card-sub {
+  font-size: 12px;
+  color: #888888;
+  margin-top: 3px;
+}
+
+
+/* ═══════════════════════════════════════════
+   BOTÃO PRIMÁRIO
+═══════════════════════════════════════════ */
+
+.btn-primary {
+  background: linear-gradient(135deg, #1D9E75, #148a63);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  width: 100%;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 14px rgba(29, 158, 117, 0.3);
+  /* Sombra verde — "glow" sutil que realça o botão */
+  letter-spacing: 0.2px;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(29, 158, 117, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(29, 158, 117, 0.3);
+}
+
+
+/* ═══════════════════════════════════════════
+   CAIXA DE DESTAQUE (dica prática)
+═══════════════════════════════════════════ */
+
+.highlight-box {
+  background: linear-gradient(135deg, #e8f5ee, #d4ede3);
+  border: 1px solid #a8dcc5;
+  border-left: 4px solid #1D9E75;
+  /* Borda esquerda mais grossa — detalhe de destaque */
+  border-radius: 0 10px 10px 0;
+  /* Cantos arredondados só na direita — combina com a borda esquerda reta */
+  padding: 14px;
+  margin: 14px 0;
+}
+
+.highlight-box p {
+  font-size: 13px;
+  color: #085041;
+  line-height: 1.6;
+}
+
+
+/* ═══════════════════════════════════════════
+   BARRA DE PROGRESSO
+═══════════════════════════════════════════ */
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 500;
+  color: #888888;
+  margin-bottom: 6px;
+}
+
+.progress-bg {
+  background-color: #e8eeeb;
+  border-radius: 8px;
+  height: 7px;
+  margin-bottom: 18px;
+  overflow: hidden;
+  /* overflow: hidden garante que o fill não ultrapasse a borda arredondada */
+}
+
+.progress-fill {
+  background: linear-gradient(90deg, #1D9E75, #2ec48f);
+  border-radius: 8px;
+  height: 7px;
+  transition: width 0.4s ease;
+  /* Transição suave quando a barra avança */
+}
+
+
+/* ═══════════════════════════════════════════
+   INPUTS DA CALCULADORA
+═══════════════════════════════════════════ */
+
+.input-group {
+  margin-bottom: 12px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #555555;
+  margin-bottom: 6px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: 'Inter', Arial, sans-serif;
+  color: #1a1a1a;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  /* Remove o contorno padrão do navegador */
+}
+
+.input-group input:focus {
+  border-color: #1D9E75;
+  box-shadow: 0 0 0 3px rgba(29, 158, 117, 0.12);
+  /* Anel verde sutil ao focar no campo */
+}
+
+.input-group input::placeholder {
+  color: #bbbbbb;
+  /* Cor do texto de exemplo (placeholder) */
+}
+
+
+/* ═══════════════════════════════════════════
+   RESULTADO DA CALCULADORA
+═══════════════════════════════════════════ */
+
+.result-box {
+  background: #f8faf9;
+  border: 1px solid #e0ede8;
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.result-box p {
+  font-size: 14px;
+  color: #444444;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.result-destaque {
+  font-weight: 700;
+  color: #1D9E75;
+  font-size: 16px;
+}
+
+
+/* ═══════════════════════════════════════════
+   CONQUISTAS
+═══════════════════════════════════════════ */
+
+.conquista-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid #e8edeb;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  /* Animação ao entrar na tela */
+  animation: fadeIn 0.4s ease-out;
+}
+
+.conquista-numero {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1D9E75, #148a63);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(29, 158, 117, 0.3);
+}
+
+.card-bloqueado {
+  opacity: 0.5;
+}
+
+
+/* ═══════════════════════════════════════════
+   RÓTULOS DE SEÇÃO
+═══════════════════════════════════════════ */
+
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #aaaaaa;
+  margin: 18px 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  /* Mais espaço entre letras — visual de categoria */
+}
+
+
+/* ═══════════════════════════════════════════
+   UTILITÁRIOS
+═══════════════════════════════════════════ */
+
+/* Texto centralizado */
+.text-center {
+  text-align: center;
+}
+
+/* Margem superior pequena */
+.mt-8 {
+  margin-top: 8px;
+}
+
+/* Cor de texto secundária */
+.text-muted {
+  color: #888888;
+  font-size: 13px;
+}

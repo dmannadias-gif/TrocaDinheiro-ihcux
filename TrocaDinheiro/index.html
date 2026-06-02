@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <script>
+  // Se o usuário acessar o index diretamente,
+  // redireciona para o bemvindo
+  if (!localStorage.getItem('nome-usuario')) {
+    window.location.replace('bemvindo.html');
+  }
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrocaDinheiro</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #f0f4f2;
+      color: #1f2937;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    header {
+      background: white;
+      padding: 14px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .logo-btn {
+      text-decoration: none;
+      border-radius: 12px;
+      padding: 6px 10px;
+      transition: 0.2s;
+    }
+
+    .logo-btn:hover { background: #f0fdf4; }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      color: #16a34a;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span { color: #111827; }
+
+    .status {
+      background: #dcfce7;
+      color: #166534;
+      padding: 7px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #16a34a;
+      animation: piscar 2s infinite;
+    }
+
+    @keyframes piscar {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 40px 20px 60px;
+    }
+
+    .hero { margin-bottom: 32px; }
+
+    .hero h1 {
+      font-size: 38px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      letter-spacing: -0.8px;
+      color: #111827;
+    }
+
+    .hero p {
+      color: #6b7280;
+      font-size: 16px;
+      line-height: 1.7;
+      max-width: 620px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 24px 20px;
+      cursor: pointer;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      border: 2px solid transparent;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      position: relative;
+      overflow: hidden;
+      text-align: left;
+      width: 100%;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%;
+      height: 4px;
+      transition: left 0.35s ease;
+    }
+
+    .card.red::before    { background: #ef4444; }
+    .card.yellow::before { background: #f59e0b; }
+    .card.orange::before { background: #f97316; }
+    .card.green::before  { background: #16a34a; }
+    .card.teal::before   { background: #0d9488; }
+    .card.purple::before { background: #7c3aed; }
+
+    .card:hover::before { left: 0; }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 32px rgba(0,0,0,0.10);
+      border-color: #d1fae5;
+    }
+
+    .card:active { transform: translateY(-2px); }
+
+    .icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin-bottom: 14px;
+    }
+
+    .icon.red    { background: #fee2e2; }
+    .icon.yellow { background: #fef3c7; }
+    .icon.orange { background: #ffedd5; }
+    .icon.green  { background: #dcfce7; }
+    .icon.teal   { background: #ccfbf1; }
+    .icon.purple { background: #ede9fe; }
+
+    .card h2 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #111827;
+    }
+
+    .card p {
+      color: #9ca3af;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .section {
+      background: white;
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .section-title h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .badge {
+      background: #dcfce7;
+      color: #166534;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .pig-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pig-container {
+      animation: pulsePig 3s ease-in-out infinite;
+    }
+
+    @keyframes pulsePig {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.04); }
+    }
+
+    .pig-status {
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      padding: 7px 16px;
+      border-radius: 20px;
+      transition: all 0.4s ease;
+    }
+
+    .pig-status.feliz  { background: #dcfce7; color: #166534; }
+    .pig-status.neutro { background: #fef3c7; color: #92400e; }
+    .pig-status.triste { background: #fee2e2; color: #991b1b; }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 500;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    .progress-bg {
+      background: #e5e7eb;
+      border-radius: 8px;
+      height: 8px;
+      margin-bottom: 22px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      background: linear-gradient(90deg, #16a34a, #22c55e);
+      border-radius: 8px;
+      height: 8px;
+      transition: width 0.5s ease;
+    }
+
+    .calculator-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .input-group { margin-bottom: 14px; }
+
+    .input-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 6px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 15px;
+      color: #111827;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .input-group input:focus {
+      border-color: #16a34a;
+      box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
+    }
+
+    .input-group input::placeholder { color: #d1d5db; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 16px 0 10px;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 14px rgba(22,163,74,0.3);
+      margin-top: 8px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(22,163,74,0.4);
+    }
+
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-secondary {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 14px;
+      background: #f3f4f6;
+      color: #374151;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 10px;
+    }
+
+    .btn-secondary:hover { background: #e5e7eb; }
+
+    .result-box {
+      background: #f9fafb;
+      border-radius: 14px;
+      padding: 18px;
+      margin-top: 16px;
+      display: none;
+      border-left: 5px solid #e5e7eb;
+      transition: all 0.3s;
+    }
+
+    .result-box.success { border-left-color: #16a34a; }
+    .result-box.warning { border-left-color: #f59e0b; }
+    .result-box.danger  { border-left-color: #ef4444; }
+
+    .result-box h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .result-box p {
+      font-size: 14px;
+      color: #6b7280;
+      line-height: 1.6;
+    }
+
+    .barra-categoria { margin-bottom: 8px; }
+
+    .barra-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 3px;
+    }
+
+    .barra-bg {
+      background: #e5e7eb;
+      border-radius: 6px;
+      height: 7px;
+      overflow: hidden;
+    }
+
+    .barra-fill {
+      border-radius: 6px;
+      height: 7px;
+      transition: width 0.5s ease;
+    }
+
+    .grafico-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 20px;
+    }
+
+    .grafico-instrucao {
+      color: #9ca3af;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .tip-box {
+      background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+      border-left: 5px solid #16a34a;
+      border-radius: 0 14px 14px 0;
+      padding: 16px 20px;
+      margin-top: 16px;
+      display: none;
+    }
+
+    .tip-box h3 {
+      color: #166534;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .tip-box p {
+      color: #15803d;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .historico-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      margin-bottom: 8px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .historico-item .data {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 2px;
+    }
+
+    .saldo-tag {
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    .saldo-tag.positivo { background: #dcfce7; color: #166534; }
+    .saldo-tag.negativo { background: #fee2e2; color: #991b1b; }
+    .saldo-tag.zerado   { background: #fef3c7; color: #92400e; }
+
+    .historico-vazio {
+      text-align: center;
+      color: #9ca3af;
+      font-size: 14px;
+      padding: 20px 0;
+    }
+
+    footer {
+      background: #111827;
+      color: #6b7280;
+      padding: 24px 40px;
+      text-align: center;
+      font-size: 13px;
+      margin-top: 20px;
+    }
+
+    footer strong { color: #d1fae5; }
+
+    @media (max-width: 900px) {
+      .cards { grid-template-columns: repeat(2, 1fr); }
+      .calculator-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 28px; }
+    }
+
+    @media (max-width: 560px) {
+      header { padding: 12px 16px; }
+      .cards { grid-template-columns: 1fr; }
+      .container { padding: 24px 14px 40px; }
+      .section { padding: 20px 16px; }
+      .logo { font-size: 20px; }
+    }
+
+  </style>
+</head>
+
+<body id="inicio">
+
+  <header>
+    <a href="bemvindo.html" class="logo-btn">
+      <div class="logo">💰 Troca<span>Dinheiro</span></div>
+    </a>
+    <div class="status">Sistema funcionando</div>
+  </header>
+
+  <div class="container">
+
+    <div class="hero">
+      <h1>Qual é a sua situação hoje?</h1>
+      <p>Educação financeira do jeito que você entende — sem jargão, sem complicação. Aqui você aprende a lidar com o dinheiro com o salário que você tem.</p>
+    </div>
+
+    <div class="cards">
+
+      <button class="card red" onclick="irPara('conteudo.html?tema=vermelho')">
+        <div class="icon red">😓</div>
+        <h2>Estou no vermelho</h2>
+        <p>Não estou conseguindo fechar o mês.</p>
+      </button>
+
+      <button class="card yellow" onclick="irPara('conteudo.html?tema=cartao')">
+        <div class="icon yellow">💳</div>
+        <h2>Dívida no cartão</h2>
+        <p>Quero entender como sair dessa situação.</p>
+      </button>
+
+      <button class="card orange" onclick="irPara('conteudo.html?tema=cheque')">
+        <div class="icon orange">🏦</div>
+        <h2>Cheque especial</h2>
+        <p>Como sair dessa armadilha de juros.</p>
+      </button>
+
+      <button class="card green" onclick="irPara('conteudo.html?tema=decimo')">
+        <div class="icon green">🎁</div>
+        <h2>O que fazer com o 13º?</h2>
+        <p>Aprenda a usar melhor esse dinheiro extra.</p>
+      </button>
+
+      <button class="card teal" onclick="irPara('conteudo.html?tema=poupanca')">
+        <div class="icon teal">🐷</div>
+        <h2>Quero guardar dinheiro</h2>
+        <p>Como criar uma reserva do zero.</p>
+      </button>
+
+      <button class="card purple" onclick="irPara('conquistas.html')">
+        <div class="icon purple">🏆</div>
+        <h2>Minhas conquistas</h2>
+        <p>Veja seu progresso nos módulos.</p>
+      </button>
+
+    </div>
+
+    <div class="section">
+
+      <div class="section-title">
+        <h2>📊 Calculadora de orçamento</h2>
+        <div class="badge">Resultado em tempo real</div>
+      </div>
+
+      <div class="progress-label">
+        <span>Preencha os campos abaixo</span>
+        <span id="progresso-texto">0 de 5 campos</span>
+      </div>
+      <div class="progress-bg">
+        <div class="progress-fill" id="progresso-barra" style="width:0%"></div>
+      </div>
+
+      <div class="calculator-grid">
+
+        <div>
+
+          <div class="input-group">
+            <label>Quanto você ganha por mês? (R$)</label>
+            <input type="number" id="renda" placeholder="Ex: 1320"
+              oninput="atualizarProgresso(); calcular()">
+          </div>
+
+          <p class="section-label">Seus gastos principais</p>
+
+          <div class="input-group">
+            <label>Aluguel / Moradia (R$)</label>
+            <input type="number" id="aluguel" placeholder="Ex: 600"
+              oninput="atualizarProgresso(); calcular()">
+          </div>
+
+          <div class="input-group">
+            <label>Alimentação (R$)</label>
+            <input type="number" id="alimentacao" placeholder="Ex: 400"
+              oninput="atualizarProgresso(); calcular()">
+          </div>
+
+          <div class="input-group">
+            <label>Transporte (R$)</label>
+            <input type="number" id="transporte" placeholder="Ex: 200"
+              oninput="atualizarProgresso(); calcular()">
+          </div>
+
+          <div class="input-group">
+            <label>Outros gastos (R$)</label>
+            <input type="number" id="outros" placeholder="Ex: 150"
+              oninput="atualizarProgresso(); calcular()">
+          </div>
+
+          <button class="btn-primary" onclick="salvarHistorico()">
+            Salvar no histórico 💾
+          </button>
+
+          <button class="btn-secondary" onclick="limpar()">
+            Limpar dados
+          </button>
+
+          <div class="result-box" id="resultado">
+            <h3 id="titulo-resultado"></h3>
+            <p id="msg-resultado"></p>
+            <div id="barras-categorias" style="margin-top:14px;"></div>
+          </div>
+
+          <div class="tip-box" id="dica-calc">
+            <h3>💡 Dica prática</h3>
+            <p id="dica-calc-texto"></p>
+          </div>
+
+        </div>
+
+        <div class="grafico-area">
+
+          <div class="pig-wrapper">
+            <div class="pig-container" id="pig-container">
+              <svg id="pig-svg" width="140" height="140" viewBox="0 0 140 140">
+                <ellipse cx="70" cy="132" rx="40" ry="6" fill="rgba(0,0,0,0.08)"/>
+                <circle id="pig-body" cx="70" cy="72" r="50" fill="#ffb3c6"/>
+                <ellipse cx="36" cy="38" rx="14" ry="18" fill="#ff85a1" transform="rotate(-20 36 38)"/>
+                <ellipse cx="36" cy="38" rx="8" ry="11" fill="#ff99b4" transform="rotate(-20 36 38)"/>
+                <ellipse cx="104" cy="38" rx="14" ry="18" fill="#ff85a1" transform="rotate(20 104 38)"/>
+                <ellipse cx="104" cy="38" rx="8" ry="11" fill="#ff99b4" transform="rotate(20 104 38)"/>
+                <ellipse cx="70" cy="88" rx="22" ry="15" fill="#ff85a1"/>
+                <ellipse cx="62" cy="90" rx="5" ry="4" fill="#e0607a"/>
+                <ellipse cx="78" cy="90" rx="5" ry="4" fill="#e0607a"/>
+                <circle cx="52" cy="62" r="8" fill="white"/>
+                <circle cx="54" cy="62" r="4" fill="#1f2937"/>
+                <circle cx="56" cy="60" r="1.5" fill="white"/>
+                <circle cx="88" cy="62" r="8" fill="white"/>
+                <circle cx="90" cy="62" r="4" fill="#1f2937"/>
+                <circle cx="92" cy="60" r="1.5" fill="white"/>
+                <path id="pig-mouth" d="M 58 100 Q 70 110 82 100"
+                  stroke="#e0607a" stroke-width="2.5" fill="none" stroke-linecap="round"/>                <ellipse id="pig-blush-left"  cx="44" cy="76" rx="9" ry="6" fill="#ff6b8a" opacity="0"/>
+                <ellipse id="pig-blush-right" cx="96" cy="76" rx="9" ry="6" fill="#ff6b8a" opacity="0"/>
+              </svg>
+            </div>
+            <div class="pig-status neutro" id="pig-status">Preencha os dados 🐷</div>
+          </div>
+
+          <canvas id="grafico" width="220" height="220"></canvas>
+          <p class="grafico-instrucao" id="grafico-instrucao">Preencha os campos para ver o gráfico</p>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <h2>🕓 Histórico de cálculos</h2>
+        <div class="badge">Salvo no seu navegador</div>
+      </div>
+      <div id="historico-lista"></div>
+      <button class="btn-secondary" onclick="limparHistorico()"
+        style="margin-top:12px; width:auto; padding:8px 20px;">
+        Apagar histórico
+      </button>
+    </div>
+
+  </div>
+
+  <footer>
+    <strong>TrocaDinheiro</strong> © 2026 — Projeto baseado em UX e Heurísticas de Nielsen.
+  </footer>
+
+  <script>
+
+    function irPara(pagina) {
+      document.body.style.opacity = '0';
+      document.body.style.transition = 'opacity 0.25s';
+      setTimeout(function() { window.location.href = pagina; }, 250);
+    }
+
+    function atualizarProgresso() {
+      const campos = ['renda', 'aluguel', 'alimentacao', 'transporte', 'outros'];
+      const preenchidos = campos.filter(function(id) {
+        return document.getElementById(id).value !== '';
+      }).length;
+      const pct = (preenchidos / campos.length) * 100;
+      document.getElementById('progresso-barra').style.width = pct + '%';
+      document.getElementById('progresso-texto').textContent =
+        preenchidos + ' de ' + campos.length + ' campos';
+    }
+
+    function atualizarPorquinho(estado) {
+      const mouth     = document.getElementById('pig-mouth');
+      const blushL    = document.getElementById('pig-blush-left');
+      const blushR    = document.getElementById('pig-blush-right');
+      const body      = document.getElementById('pig-body');
+      const statusEl  = document.getElementById('pig-status');
+      const container = document.getElementById('pig-container');
+
+      container.style.animation = 'none';
+      setTimeout(function() {
+        container.style.animation = 'pulsePig 3s ease-in-out infinite';
+      }, 10);
+
+      if (estado === 'feliz') {
+        mouth.setAttribute('d', 'M 58 104 Q 70 114 82 104');
+        blushL.setAttribute('opacity', '0.6');
+        blushR.setAttribute('opacity', '0.6');
+        body.setAttribute('fill', '#ffb3c6');
+        statusEl.textContent = 'Suas finanças estão ótimas! 🎉';
+        statusEl.className = 'pig-status feliz';
+      } else if (estado === 'neutro') {
+        mouth.setAttribute('d', 'M 58 106 Q 70 107 82 106');
+        blushL.setAttribute('opacity', '0');
+        blushR.setAttribute('opacity', '0');
+        body.setAttribute('fill', '#ffb3c6');
+        statusEl.textContent = 'Quase lá, fique de olho! ⚠️';
+        statusEl.className = 'pig-status neutro';
+      } else {
+        mouth.setAttribute('d', 'M 58 110 Q 70 102 82 110');
+        blushL.setAttribute('opacity', '0');
+        blushR.setAttribute('opacity', '0');
+        body.setAttribute('fill', '#fca5a5');
+        statusEl.textContent = 'Atenção! Os gastos estão altos 😟';
+        statusEl.className = 'pig-status triste';
+      }
+    }
+
+    let grafico;
+
+    function lerCampo(id) {
+      const v = parseFloat(document.getElementById(id).value);
+      return isNaN(v) ? 0 : v;
+    }
+
+    function calcular() {
+      const renda       = lerCampo('renda');
+      const aluguel     = lerCampo('aluguel');
+      const alimentacao = lerCampo('alimentacao');
+      const transporte  = lerCampo('transporte');
+      const outros      = lerCampo('outros');
+
+      if (renda === 0) {
+        document.getElementById('resultado').style.display = 'none';
+        document.getElementById('dica-calc').style.display = 'none';
+        document.getElementById('grafico-instrucao').style.display = 'block';
+        atualizarPorquinho('neutro');
+        return;
+      }
+
+      const totalGastos = aluguel + alimentacao + transporte + outros;
+      const saldo = renda - totalGastos;
+
+      const resBox   = document.getElementById('resultado');
+      const tituloEl = document.getElementById('titulo-resultado');
+      const msgEl    = document.getElementById('msg-resultado');
+      resBox.style.display = 'block';
+
+      if (saldo > renda * 0.1) {
+        resBox.className = 'result-box success';
+        tituloEl.textContent = 'Boa notícia! 🎉';
+        msgEl.textContent = 'Sobrou R$ ' + saldo.toLocaleString('pt-BR') + ' este mês. Ótima oportunidade para guardar!';
+        atualizarPorquinho('feliz');
+      } else if (saldo >= 0) {
+        resBox.className = 'result-box warning';
+        tituloEl.textContent = 'Atenção! ⚠️';
+        msgEl.textContent = 'Sobrou R$ ' + saldo.toLocaleString('pt-BR') + '. Qualquer imprevisto pode te deixar no vermelho.';
+        atualizarPorquinho('neutro');
+      } else {
+        resBox.className = 'result-box danger';
+        tituloEl.textContent = 'Cuidado! ❌';
+        msgEl.textContent = 'Está faltando R$ ' + Math.abs(saldo).toLocaleString('pt-BR') + '. Clique em "Estou no vermelho" acima para receber ajuda.';
+        atualizarPorquinho('triste');
+      }
+
+      desenharBarras(renda, aluguel, alimentacao, transporte, outros);
+      atualizarGrafico(totalGastos, Math.max(saldo, 0));
+      mostrarDica(saldo, renda, aluguel);
+    }
+
+    function desenharBarras(renda, aluguel, alimentacao, transporte, outros) {
+      const container = document.getElementById('barras-categorias');
+      const cats = [
+        { nome: 'Aluguel',     valor: aluguel,     cor: '#16a34a' },
+        { nome: 'Alimentação', valor: alimentacao,  cor: '#22c55e' },
+        { nome: 'Transporte',  valor: transporte,   cor: '#86efac' },
+        { nome: 'Outros',      valor: outros,       cor: '#6b7280' },
+      ];
+      container.innerHTML = '';
+      cats.forEach(function(cat) {
+        if (cat.valor === 0) return;
+        const pct = Math.min((cat.valor / renda) * 100, 100);
+        container.innerHTML += '<div class="barra-categoria"><div class="barra-label"><span>' + cat.nome + '</span><span>R$ ' + cat.valor.toLocaleString('pt-BR') + ' (' + Math.round(pct) + '%)</span></div><div class="barra-bg"><div class="barra-fill" style="width:' + pct + '%; background:' + cat.cor + ';"></div></div></div>';
+      });
+    }
+
+function atualizarGrafico(gastos, saldo) {
+      document.getElementById('grafico-instrucao').style.display = 'none';
+
+      if (grafico) {
+        // Em vez de destruir e recriar, atualiza os dados do gráfico existente
+        // Isso elimina o tremor porque o gráfico não some e reaparece
+        grafico.data.datasets[0].data = [gastos, saldo];
+        grafico.update('active');
+        // 'active' usa a animação padrão do Chart.js — suave e gradativa
+        return;
+        // return sai da função aqui — não cria um novo gráfico
+      }
+
+      // Só cria o gráfico na primeira vez que é chamado
+      const ctx = document.getElementById('grafico');
+      grafico = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Gastos', 'Saldo disponível'],
+          datasets: [{
+            data: [gastos, saldo],
+            backgroundColor: ['#ef4444', '#16a34a'],
+            borderWidth: 0,
+          }]
+        },
+        options: {
+          responsive: false,
+          // Animação suave e gradativa ao atualizar
+          animation: {
+            duration: 600,
+            // 600ms para completar a transição
+            easing: 'easeInOutQuart'
+            // easeInOutQuart: começa devagar, acelera no meio, desacelera no fim
+          },
+          plugins: {
+            legend: { position: 'bottom' }
+          }
+        }
+      });
+    }
+    function mostrarDica(saldo, renda, aluguel) {
+      const dicaBox   = document.getElementById('dica-calc');
+      const dicaTexto = document.getElementById('dica-calc-texto');
+      dicaBox.style.display = 'block';
+      if (saldo < 0) {
+        dicaTexto.textContent = 'Seus gastos estão maiores que sua renda. Clique em "Estou no vermelho" para receber orientações práticas.';
+      } else if (saldo < renda * 0.1) {
+        dicaTexto.textContent = 'Você está quase no limite. Tente guardar pelo menos R$ ' + Math.round(renda * 0.1).toLocaleString('pt-BR') + ' por mês como reserva de emergência.';
+      } else if (aluguel > renda * 0.4) {
+        dicaTexto.textContent = 'Seu aluguel está acima de 40% da sua renda. O recomendado é até 30%. Avalie opções mais em conta se possível.';
+      } else {
+        dicaTexto.textContent = 'Seu orçamento está equilibrado! Use parte do que sobra para construir uma reserva — mesmo R$ 50 por mês fazem diferença.';
+      }
+    }
+
+    function salvarHistorico() {
+      const renda       = lerCampo('renda');
+      const aluguel     = lerCampo('aluguel');
+      const alimentacao = lerCampo('alimentacao');
+      const transporte  = lerCampo('transporte');
+      const outros      = lerCampo('outros');
+
+      if (renda === 0) {
+        alert('Preencha pelo menos o campo de renda antes de salvar.');
+        return;
+      }
+
+      const totalGastos = aluguel + alimentacao + transporte + outros;
+      const saldo = renda - totalGastos;
+
+      const registro = {
+        data: new Date().toLocaleString('pt-BR'),
+        renda: renda,
+        gastos: totalGastos,
+        saldo: saldo,
+      };
+
+      const historico = JSON.parse(localStorage.getItem('historico') || '[]');
+      historico.unshift(registro);
+      if (historico.length > 10) historico.pop();
+      localStorage.setItem('historico', JSON.stringify(historico));
+      renderizarHistorico();
+      alert('Cálculo salvo no histórico! ✅');
+    }
+
+    function renderizarHistorico() {
+      const historico = JSON.parse(localStorage.getItem('historico') || '[]');
+      const lista = document.getElementById('historico-lista');
+
+      if (historico.length === 0) {
+        lista.innerHTML = '<p class="historico-vazio">Nenhum cálculo salvo ainda. Preencha a calculadora e clique em "Salvar no histórico".</p>';
+        return;
+      }
+
+      lista.innerHTML = '';
+      historico.forEach(function(item) {
+        const tipo = item.saldo > 0 ? 'positivo' : item.saldo === 0 ? 'zerado' : 'negativo';
+        const sinal = item.saldo >= 0 ? '+' : '-';
+        lista.innerHTML += '<div class="historico-item"><div><div style="font-size:13px; font-weight:600; color:#111827;">Renda: R$ ' + item.renda.toLocaleString('pt-BR') + ' · Gastos: R$ ' + item.gastos.toLocaleString('pt-BR') + '</div><div class="data">' + item.data + '</div></div><div class="saldo-tag ' + tipo + '">' + sinal + ' R$ ' + Math.abs(item.saldo).toLocaleString('pt-BR') + '</div></div>';
+      });
+    }
+
+    function limparHistorico() {
+      if (confirm('Apagar todo o histórico de cálculos?')) {
+        localStorage.removeItem('historico');
+        renderizarHistorico();
+      }
+    }
+
+    function limpar() {
+      ['renda', 'aluguel', 'alimentacao', 'transporte', 'outros'].forEach(function(id) {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('resultado').style.display = 'none';
+      document.getElementById('dica-calc').style.display = 'none';
+      document.getElementById('grafico-instrucao').style.display = 'block';
+      document.getElementById('progresso-barra').style.width = '0%';
+      document.getElementById('progresso-texto').textContent = '0 de 5 campos';
+      if (grafico) grafico.destroy();
+      atualizarPorquinho('neutro');
+    }
+
+    renderizarHistorico();
+
+  </script>
+
+</body>
+</html>

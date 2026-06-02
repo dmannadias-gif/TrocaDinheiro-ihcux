@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrocaDinheiro — Conquistas</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #f0f4f2;
+      color: #1f2937;
+      animation: fadeIn 0.35s ease-out;
+      min-height: 100vh;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══════════════════════════════════════
+       HEADER
+    ═══════════════════════════════════════ */
+
+    header {
+      background: white;
+      padding: 14px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .logo-btn {
+      text-decoration: none;
+      border-radius: 12px;
+      padding: 6px 10px;
+      transition: 0.2s;
+    }
+
+    .logo-btn:hover { background: #f0fdf4; }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      color: #16a34a;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span { color: #111827; }
+
+    .voltar-btn {
+      background: #f3f4f6;
+      color: #374151;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .voltar-btn:hover { background: #e5e7eb; }
+
+    /* ═══════════════════════════════════════
+       CONTAINER
+    ═══════════════════════════════════════ */
+
+    .page-wrapper {
+      max-width: 520px;
+      margin: 40px auto;
+      padding: 0 16px 60px;
+    }
+
+    /* ═══════════════════════════════════════
+       CABEÇALHO DA PÁGINA
+    ═══════════════════════════════════════ */
+
+    .page-header {
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      border-radius: 24px;
+      padding: 28px 24px 24px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::after {
+      content: '';
+      position: absolute;
+      top: -30px; right: -30px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .page-header p {
+      color: rgba(255,255,255,0.75);
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .page-header h1 {
+      color: white;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+
+    /* ═══════════════════════════════════════
+       CARD BRANCO GERAL
+    ═══════════════════════════════════════ */
+
+    .card-section {
+      background: white;
+      border-radius: 20px;
+      padding: 22px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .card-section-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+    }
+
+    /* ═══════════════════════════════════════
+       CARD DO QUE APRENDEU HOJE
+    ═══════════════════════════════════════ */
+
+    .aprendeu-box {
+      background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+      border-left: 5px solid #16a34a;
+      border-radius: 0 16px 16px 0;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+    }
+
+    .aprendeu-box h3 {
+      color: #166534;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .aprendeu-box p {
+      color: #15803d;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════
+       BARRA DE PROGRESSO GERAL
+    ═══════════════════════════════════════ */
+
+    .progresso-geral {
+      background: white;
+      border-radius: 20px;
+      padding: 22px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .progresso-topo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .progresso-topo h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .progresso-num {
+      font-size: 13px;
+      font-weight: 700;
+      color: #16a34a;
+      background: #dcfce7;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    .progress-bg {
+      background: #e5e7eb;
+      border-radius: 8px;
+      height: 10px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .progress-fill {
+      background: linear-gradient(90deg, #16a34a, #22c55e);
+      border-radius: 8px;
+      height: 10px;
+      transition: width 0.8s ease;
+    }
+
+    .progresso-legenda {
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    /* ═══════════════════════════════════════
+       MÓDULOS CONCLUÍDOS
+    ═══════════════════════════════════════ */
+
+    .conquista-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px;
+      border-radius: 14px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      margin-bottom: 10px;
+      animation: entrar 0.4s ease-out;
+    }
+
+    @keyframes entrar {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .conquista-numero {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 15px;
+      flex-shrink: 0;
+      box-shadow: 0 3px 8px rgba(22,163,74,0.3);
+    }
+
+    .conquista-info h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 3px;
+    }
+
+    .conquista-info p {
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .conquista-check {
+      margin-left: auto;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    /* ═══════════════════════════════════════
+       PRÓXIMOS MÓDULOS (disponíveis)
+    ═══════════════════════════════════════ */
+
+    .proximo-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px;
+      border-radius: 14px;
+      background: white;
+      border: 1.5px solid #e5e7eb;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      width: 100%;
+      text-align: left;
+    }
+
+    .proximo-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      border-color: #16a34a;
+    }
+
+    .proximo-item:active { transform: translateY(0); }
+
+    .proximo-icone {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+      background: #f3f4f6;
+    }
+
+    .proximo-info h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 2px;
+    }
+
+    .proximo-info p {
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .proximo-seta {
+      margin-left: auto;
+      color: #9ca3af;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    /* ═══════════════════════════════════════
+       ESTADO VAZIO (nenhum módulo concluído)
+    ═══════════════════════════════════════ */
+
+    .estado-vazio {
+      text-align: center;
+      padding: 24px 16px;
+      color: #9ca3af;
+    }
+
+    .estado-vazio .icone { font-size: 40px; margin-bottom: 10px; }
+
+    .estado-vazio p {
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════
+       CARD DE PARABÉNS (tudo concluído)
+    ═══════════════════════════════════════ */
+
+    .parabens-card {
+      background: linear-gradient(135deg, #ecfdf5, #dcfce7);
+      border-radius: 20px;
+      padding: 28px 24px;
+      text-align: center;
+      margin-bottom: 16px;
+      border: 1px solid #a7f3d0;
+    }
+
+    .parabens-card .icone { font-size: 48px; margin-bottom: 12px; }
+
+    .parabens-card h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #166534;
+      margin-bottom: 8px;
+    }
+
+    .parabens-card p {
+      font-size: 14px;
+      color: #15803d;
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════
+       HISTÓRICO DE CÁLCULOS
+    ═══════════════════════════════════════ */
+
+    .historico-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      margin-bottom: 8px;
+      animation: entrar 0.3s ease;
+    }
+
+    .historico-item .info-principal {
+      font-size: 13px;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .historico-item .data {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 2px;
+    }
+
+    .saldo-tag {
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .saldo-tag.positivo { background: #dcfce7; color: #166534; }
+    .saldo-tag.negativo { background: #fee2e2; color: #991b1b; }
+    .saldo-tag.zerado   { background: #fef3c7; color: #92400e; }
+
+    .historico-vazio {
+      text-align: center;
+      color: #9ca3af;
+      font-size: 13px;
+      padding: 16px 0;
+    }
+
+    /* ═══════════════════════════════════════
+       BOTÕES
+    ═══════════════════════════════════════ */
+
+    .btn-primary {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 14px rgba(22,163,74,0.3);
+      margin-bottom: 10px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(22,163,74,0.4);
+    }
+
+    .btn-secondary {
+      width: auto;
+      padding: 9px 18px;
+      border: none;
+      border-radius: 10px;
+      background: #f3f4f6;
+      color: #6b7280;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 8px;
+    }
+
+    .btn-secondary:hover { background: #e5e7eb; }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVO
+    ═══════════════════════════════════════ */
+
+    @media (max-width: 560px) {
+      header { padding: 12px 16px; }
+      .page-wrapper { margin: 20px auto; }
+      .page-header { border-radius: 16px; padding: 22px 18px; }
+      .page-header h1 { font-size: 19px; }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <a href="bemvindo.html" class="logo-btn">
+      <div class="logo">💰 Troca<span>Dinheiro</span></div>
+    </a>
+    <button class="voltar-btn" onclick="irPara('index.html')">
+      🏠 Início
+    </button>
+  </header>
+
+  <div class="page-wrapper">
+
+    <!-- CABEÇALHO -->
+    <div class="page-header">
+      <p>Seu aprendizado</p>
+      <h1>🏆 Minhas conquistas</h1>
+    </div>
+
+    <!-- O QUE APRENDEU -->
+    <div class="aprendeu-box" id="aprendeu-box" style="display:none;">
+      <h3>✅ Você aprendeu recentemente:</h3>
+      <p id="aprendeu-texto"></p>
+    </div>
+
+    <!-- BARRA DE PROGRESSO GERAL -->
+    <div class="progresso-geral">
+      <div class="progresso-topo">
+        <h3>Progresso geral</h3>
+        <span class="progresso-num" id="progresso-num">0 de 5</span>
+      </div>
+      <div class="progress-bg">
+        <div class="progress-fill" id="progresso-barra" style="width:0%"></div>
+      </div>
+      <p class="progresso-legenda" id="progresso-legenda">
+        Complete os módulos para ver seu progresso aqui.
+      </p>
+    </div>
+
+    <!-- MÓDULOS CONCLUÍDOS -->
+    <div class="card-section" id="secao-concluidos" style="display:none;">
+      <p class="card-section-title">Módulos concluídos</p>
+      <div id="lista-concluidos"></div>
+    </div>
+
+    <!-- PARABÉNS (aparece só quando tudo é concluído) -->
+    <div class="parabens-card" id="parabens-card" style="display:none;">
+      <div class="icone">🎊</div>
+      <h2>Você completou tudo!</h2>
+      <p>Parabéns — você passou por todos os módulos do TrocaDinheiro. Compartilhe esse conhecimento com alguém que precisa!</p>
+    </div>
+
+    <!-- PRÓXIMOS MÓDULOS -->
+    <div class="card-section" id="secao-proximos">
+      <p class="card-section-title">Continue aprendendo</p>
+      <div id="lista-proximos"></div>
+    </div>
+
+    <!-- BOTÕES -->
+    <button class="btn-primary" onclick="irPara('index.html')">
+      Aprender mais →
+    </button>
+
+    <div style="text-align:center;">
+      <button class="btn-secondary" onclick="resetar()">
+        🔄 Recomeçar do zero
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+
+    // ─────────────────────────────────────
+    // MAPA DE TEMAS
+    // Nome, ícone, resumo e destino de cada módulo
+    // ─────────────────────────────────────
+
+    const infoTemas = {
+      vermelho: {
+        nome:    'Como sair do vermelho',
+        icone:   '😓',
+        resumo:  'Você aprendeu a mapear dívidas, priorizar pagamentos e criar um colchão financeiro para não voltar ao negativo.',
+        destino: 'conteudo.html?tema=vermelho'
+      },
+      cartao: {
+        nome:    'Como os juros do cartão funcionam',
+        icone:   '💳',
+        resumo:  'Você entendeu como os juros rotativos funcionam e como usar o cartão de forma saudável.',
+        destino: 'conteudo.html?tema=cartao'
+      },
+      cheque: {
+        nome:    'Como sair do cheque especial',
+        icone:   '🏦',
+        resumo:  'Você descobriu por que o cheque especial é perigoso e como negociar uma saída com juros menores.',
+        destino: 'conteudo.html?tema=cheque'
+      },
+      decimo: {
+        nome:    'O que fazer com o 13º',
+        icone:   '🎁',
+        resumo:  'Você aprendeu a usar o 13º salário de forma estratégica — quitando dívidas e guardando o restante.',
+        destino: 'conteudo.html?tema=decimo'
+      },
+      poupanca: {
+        nome:    'Como criar uma reserva do zero',
+        icone:   '🐷',
+        resumo:  'Você descobriu como começar a guardar dinheiro mesmo com renda baixa, com constância e sem pressão.',
+        destino: 'conteudo.html?tema=poupanca'
+      }
+    };
+
+    // Ordem sugerida de aprendizado
+    const ordemTemas = ['vermelho', 'cartao', 'cheque', 'decimo', 'poupanca'];
+    const totalTemas = ordemTemas.length;
+
+
+    // ─────────────────────────────────────
+    // LENDO O HISTÓRICO DE MÓDULOS
+    // ─────────────────────────────────────
+
+    function lerConcluidos() {
+      return JSON.parse(localStorage.getItem('concluidos') || '[]');
+    }
+
+
+    // ─────────────────────────────────────
+    // REGISTRA O ÚLTIMO TEMA CONCLUÍDO
+    // Vindo da tela de conteúdo
+    // ─────────────────────────────────────
+
+    const ultimoTema = localStorage.getItem('ultimoTema');
+
+    if (ultimoTema && infoTemas[ultimoTema]) {
+      // Mostra o box do que aprendeu
+      document.getElementById('aprendeu-box').style.display  = 'block';
+      document.getElementById('aprendeu-texto').textContent  = infoTemas[ultimoTema].resumo;
+      localStorage.removeItem('ultimoTema');
+      // Remove a chave temporária após usar
+    }
+
+
+    // ─────────────────────────────────────
+    // MONTA TODA A TELA
+    // ─────────────────────────────────────
+
+    function montarTela() {
+      const concluidos = lerConcluidos();
+      const qtd = concluidos.length;
+
+      // ── BARRA DE PROGRESSO GERAL ──
+      const pct = (qtd / totalTemas) * 100;
+      document.getElementById('progresso-barra').style.width = pct + '%';
+      document.getElementById('progresso-num').textContent   = qtd + ' de ' + totalTemas;
+
+      if (qtd === 0) {
+        document.getElementById('progresso-legenda').textContent =
+          'Você ainda não concluiu nenhum módulo. Comece agora!';
+      } else if (qtd === totalTemas) {
+        document.getElementById('progresso-legenda').textContent =
+          'Incrível! Você completou todos os módulos. 🎉';
+      } else {
+        document.getElementById('progresso-legenda').textContent =
+          'Você já concluiu ' + qtd + ' de ' + totalTemas + ' módulos. Continue!';
+      }
+
+      // ── MÓDULOS CONCLUÍDOS ──
+      const secaoConcluidos = document.getElementById('secao-concluidos');
+      const listaConcluidos = document.getElementById('lista-concluidos');
+
+      if (qtd > 0) {
+        secaoConcluidos.style.display = 'block';
+        listaConcluidos.innerHTML = '';
+
+        concluidos.forEach(function(tema, i) {
+          const info = infoTemas[tema];
+          if (!info) return;
+
+          listaConcluidos.innerHTML += `
+            <div class="conquista-item">
+              <div class="conquista-numero">${i + 1}</div>
+              <div class="conquista-info">
+                <h4>${info.icone} ${info.nome}</h4>
+                <p>Concluído ✓</p>
+              </div>
+              <div class="conquista-check">⭐</div>
+            </div>`;
+        });
+      } else {
+        secaoConcluidos.style.display = 'none';
+      }
+
+      // ── PARABÉNS (tudo concluído) ──
+      const parabensCard = document.getElementById('parabens-card');
+      parabensCard.style.display = qtd === totalTemas ? 'block' : 'none';
+
+      // ── PRÓXIMOS MÓDULOS ──
+      const secaoProximos = document.getElementById('secao-proximos');
+      const listaProximos = document.getElementById('lista-proximos');
+
+      const naoConcluidos = ordemTemas.filter(function(t) {
+        return !concluidos.includes(t);
+        // filter retorna só os que ainda NÃO foram concluídos
+      });
+
+      if (naoConcluidos.length === 0) {
+        secaoProximos.style.display = 'none';
+      } else {
+        secaoProximos.style.display = 'block';
+        listaProximos.innerHTML = '';
+
+        naoConcluidos.forEach(function(tema) {
+          const info = infoTemas[tema];
+          if (!info) return;
+
+          listaProximos.innerHTML += `
+            <button class="proximo-item" onclick="irPara('${info.destino}')">
+              <div class="proximo-icone">${info.icone}</div>
+              <div class="proximo-info">
+                <h4>${info.nome}</h4>
+                <p>Toque para começar</p>
+              </div>
+              <div class="proximo-seta">→</div>
+            </button>`;
+        });
+      }
+
+    }
+
+    
+    // ─────────────────────────────────────
+    // RESETAR PROGRESSO
+    // ─────────────────────────────────────
+
+    function resetar() {
+      if (confirm('Isso vai apagar todo o seu progresso e histórico. Tem certeza?')) {
+        localStorage.removeItem('concluidos');
+        localStorage.removeItem('ultimoTema');
+        localStorage.removeItem('historico');
+        montarTela();
+      }
+    }
+
+
+    // ─────────────────────────────────────
+    // NAVEGAÇÃO COM FADE
+    // ─────────────────────────────────────
+
+    function irPara(pagina) {
+      document.body.style.opacity = '0';
+      document.body.style.transition = 'opacity 0.25s';
+      setTimeout(function() { window.location.href = pagina; }, 250);
+    }
+
+
+    // ─────────────────────────────────────
+    // INICIALIZAÇÃO
+    // ─────────────────────────────────────
+
+    montarTela();
+
+  </script>
+
+</body>
+</html>
