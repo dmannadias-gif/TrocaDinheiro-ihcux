@@ -189,7 +189,7 @@ O JavaScript lê o parâmetro com `URLSearchParams`, busca o conteúdo no objeto
 | localStorage | API nativa | Persistência de dados sem servidor |
 | [Netlify](https://www.netlify.com/) | — | Deploy e hospedagem |
 
-**Nenhuma dependência de servidor, banco de dados ou framework.** O projeto roda inteiramente no lado do cliente (front-end puro).
+**Nenhuma dependência de servidor, banco de dados ou framework.**
 
 ---
 
